@@ -1,0 +1,439 @@
+                                        Day-1
+
+# 🔹 Core JPA Annotations
+
+### `@Entity`
+
+* Marks the class as a **JPA entity**
+* Hibernate creates a **table** with the same name (default: class name)
+
+```java
+@Entity
+public class Product { }
+```
+
+---
+
+### `@Id`
+
+* Marks the **primary key** of the table
+
+```java
+@Id
+private Long id;
+```
+
+---
+
+### `@GeneratedValue(strategy = GenerationType.IDENTITY)`
+
+* Database generates the ID (auto-increment)
+* Uses MySQL’s `AUTO_INCREMENT`
+
+✔ Best choice for MySQL
+
+---
+
+### Lombok Annotations (Not JPA)
+
+```java
+@Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+```
+
+* Generate getters/setters & constructors at compile time
+* Reduce boilerplate code
+* **No DB impact**
+
+---
+
+# 🔹 Relationship Annotations (Most Important Part)
+
+## 1️⃣ `@ManyToOne` (Product → Category)
+
+```java
+@ManyToOne(cascade = CascadeType.ALL)
+@JoinColumn(name = "category_id")
+private Category category;
+```
+
+### 🔹 What does `@ManyToOne` mean?
+
+* **Many products belong to one category**
+* This side **owns the relationship**
+* Database has a **foreign key column**
+
+📌 Table structure:
+
+```sql
+product
+-------
+id
+name
+category_id  ← foreign key
+```
+
+---
+
+### 🔹 Why `@JoinColumn`?
+
+```java
+@JoinColumn(name = "category_id")
+```
+
+* Specifies the **foreign key column**
+* Without it, Hibernate uses:
+
+  ```text
+  category_id (default)
+  ```
+
+---
+
+### 🔹 What does `cascade = CascadeType.ALL` do?
+
+Cascade means:
+👉 *What happens to Product also happens to Category*
+
+| Cascade   | Effect                                  |
+| --------- | --------------------------------------- |
+| `PERSIST` | Save category when product saved        |
+| `MERGE`   | Update category when product updated    |
+| `REMOVE`  | ❌ Deletes category when product deleted |
+| `ALL`     | Includes everything                     |
+
+⚠️ **Danger here**:
+If you delete a product → **category also gets deleted**, even if other products use it.
+
+❌ **Bad practice for `ManyToOne`**
+
+✅ Better:
+
+```java
+@ManyToOne
+@JoinColumn(name = "category_id")
+private Category category;
+```
+
+---
+
+## 2️⃣ `@OneToMany` (Category → Product)
+
+```java
+@OneToMany(mappedBy = "category")
+private List<Product> products;
+```
+
+### 🔹 What does `@OneToMany` mean?
+
+* **One category has many products**
+* This is the **inverse (non-owning) side**
+* No foreign key here
+
+---
+
+### 🔹 What is `mappedBy`?
+
+```java
+mappedBy = "category"
+```
+
+* Points to the **field name in Product**
+
+```java
+private Category category;
+```
+
+Meaning:
+
+> “The `Product.category` field owns the relationship.”
+
+📌 Result:
+
+* No extra column
+* No extra join table
+* Clean schema
+
+❌ Without `mappedBy`, Hibernate creates:
+
+```sql
+category_products (extra join table)
+```
+
+---
+
+## 3️⃣ `@OneToMany` (Product → Image)
+
+```java
+@OneToMany(mappedBy = "product",
+           cascade = CascadeType.ALL,
+           orphanRemoval = true)
+private List<Image> images;
+```
+
+### 🔹 Meaning
+
+* One product has **many images**
+* Image table holds the foreign key
+
+---
+
+### 🔹 `mappedBy = "product"`
+
+* Relationship owned by:
+
+```java
+Image.product
+```
+
+---
+
+### 🔹 `cascade = CascadeType.ALL`
+
+* Save product → images saved
+* Delete product → images deleted
+* Update product → images updated
+
+✅ **Correct usage here**
+
+---
+
+### 🔹 `orphanRemoval = true`
+
+* If an image is removed from the list:
+
+```java
+product.getImages().remove(img);
+```
+
+➡️ Image is **deleted from DB**
+
+Used for **dependent child entities**
+
+---
+
+## 4️⃣ `@ManyToOne` (Image → Product)
+
+```java
+@ManyToOne
+@JoinColumn(name = "product_id")
+private Product product;
+```
+
+### 🔹 Meaning
+
+* Many images belong to **one product**
+* Image owns the relationship
+
+📌 DB:
+
+```sql
+image
+-----
+id
+product_id  ← FK
+```
+
+---
+
+# 🔹 Other Important Annotations
+
+### `@Lob`
+
+```java
+@Lob
+private Blob image;
+```
+
+* Stores **large binary data**
+* Maps to:
+
+  * `BLOB` (MySQL)
+  * `BYTEA` (PostgreSQL)
+
+⚠️ For real apps, better store images in:
+
+* File system
+* AWS S3
+  and save only URL in DB
+
+---
+
+# 🔹 Relationship Ownership Summary
+
+| Relationship       | Owner   |
+| ------------------ | ------- |
+| Product → Category | Product |
+| Category → Product | Product |
+| Product → Image    | Image   |
+| Image → Product    | Image   |
+
+👉 **Owner = side with `@JoinColumn`**
+
+---
+
+# 🔹 Recommended Fixes (Important)
+
+### ❌ Problem
+
+```java
+@ManyToOne(cascade = CascadeType.ALL)
+```
+
+### ✅ Correct Version
+
+```java
+@ManyToOne
+@JoinColumn(name = "category_id")
+private Category category;
+```
+
+---
+
+# 🔹 Final Conceptual Rule (Remember This)
+
+> 🔹 `@ManyToOne` → FK lives here
+> 🔹 `mappedBy` → “I am NOT the owner”
+> 🔹 `cascade` → propagates operations
+> 🔹 `orphanRemoval` → deletes detached children
+
+---
+
+
+
+
+                                                    Day - 2
+## 🔹 Application Identity
+
+### `spring.application.name=dream-shops`
+
+* Sets the **name of your Spring Boot application**.
+* Used in:
+
+  * Logs
+  * Spring Cloud / Microservices
+  * Actuator endpoints
+* Helpful when multiple services are running.
+
+---
+
+## 🔹 Server Configuration
+
+### `spring.port=123456` ❌ **(Invalid)**
+
+* ❗ This property is **wrong**.
+* Correct property:
+
+  ```properties
+  server.port=8080
+  ```
+* Port range must be **0–65535**
+* `123456` exceeds the maximum allowed value.
+
+✅ **Fix**
+
+```properties
+server.port=8080
+```
+
+---
+
+## 🔹 Database Connection (MySQL)
+
+### `spring.datasource.url=jdbc:mysql://localhost:3306/dream-shops`
+
+* JDBC URL for connecting to **MySQL**
+* Components:
+
+  * `localhost` → database host
+  * `3306` → default MySQL port
+  * `dream-shops` → database name
+
+---
+
+### `spring.datasource.username=root`
+
+* MySQL **username** used by Spring Boot to connect to DB.
+
+---
+
+### `spring.datasource.password=root`
+
+* Password for the above MySQL user.
+* ⚠️ Avoid hard-coding passwords in production.
+
+---
+
+### `spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver`
+
+* MySQL JDBC **driver class**
+* Required to allow Java to talk to MySQL.
+* `cj` = Connector/J (newer driver).
+
+---
+
+## 🔹 Hibernate / JPA Configuration
+
+### `spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect`
+
+* Tells Hibernate **which SQL dialect** to generate.
+* Ensures compatibility with MySQL syntax.
+
+👉 For newer MySQL versions, better:
+
+```properties
+org.hibernate.dialect.MySQL8Dialect
+```
+
+---
+
+### `spring.jpa.show-sql=true`
+
+* Prints **generated SQL queries** in the console.
+* Very useful for debugging and learning.
+
+---
+
+### `spring.jpa.properties.hibernate.format_sql=true`
+
+* Formats SQL queries to be **readable** (line breaks & indentation).
+* Works together with `show-sql`.
+
+---
+
+### `spring.jpa.hibernate.ddl-auto=update`
+
+* Controls **automatic schema generation**.
+
+| Value         | Meaning                                |
+| ------------- | -------------------------------------- |
+| `none`        | No DB changes                          |
+| `create`      | Drops & creates tables on startup      |
+| `create-drop` | Creates on start, drops on shutdown    |
+| `update`      | Updates schema without deleting data ✅ |
+| `validate`    | Checks schema only                     |
+
+⚠️ `update` is fine for development, **not recommended in production**.
+
+---
+
+## ✅ Corrected Version (Recommended)
+
+```properties
+spring.application.name=dream-shops
+
+server.port=8080
+
+spring.datasource.url=jdbc:mysql://localhost:3306/dream-shops
+spring.datasource.username=root
+spring.datasource.password=root
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.hibernate.ddl-auto=update
+```
+
+---

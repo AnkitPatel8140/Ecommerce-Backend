@@ -1,0 +1,12 @@
+                                                    Day - 1
+created 3 models Category, Image and Product
+
+                                                    Day - 2
+[step-1] Did the configurations of the database in application.properties
+
+[step-2] Created the service package and inside it created 3 more packages category, image and product
+
+[step-3] Create the ProductService class and IProductService interface
+
+
+32:09
