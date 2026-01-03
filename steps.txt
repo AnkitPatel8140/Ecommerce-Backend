@@ -6,7 +6,12 @@ created 3 models Category, Image and Product
 
 [step-2] Created the service package and inside it created 3 more packages category, image and product
 
-[step-3] Create the ProductService class and IProductService interface
+[step-3] Create the ProductService class and IProductService interface productService will implment the interface
 
 
-32:09
+                                                    Day - 3
+
+[step - 1] implements the methods in the product service created all the methods using the jpa except
+            for add product and update product
+[step - 2] for the add product i created a new class which represents the entity AddProductRequest class
+            created the object for the AddProductRequest and created the product using this object
