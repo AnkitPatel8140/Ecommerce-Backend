@@ -15,3 +15,12 @@ created 3 models Category, Image and Product
             for add product and update product
 [step - 2] for the add product i created a new class which represents the entity AddProductRequest class
             created the object for the AddProductRequest and created the product using this object
+
+                                                    Day - 4
+
+[Step - 1] create the product update request class in the requests folder.
+[Step - 2] completed the category service method.
+[Step - 3] started working on the product service.
+[Step - 4] completed the category repository.
+
+1:17

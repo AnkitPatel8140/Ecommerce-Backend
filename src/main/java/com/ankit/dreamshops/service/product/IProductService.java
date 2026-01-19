@@ -2,6 +2,7 @@ package com.ankit.dreamshops.service.product;
 
 import com.ankit.dreamshops.model.Product;
 import com.ankit.dreamshops.requests.AddProductRequest;
+import com.ankit.dreamshops.requests.ProductUpdateRequest;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface IProductService {
 
     Product getProductById(Long id);
     void deleteProductById(Long id);
-    void updateProduct(Product product,Long productId);
+    Product updateProduct(ProductUpdateRequest product, Long productId);
 
     List<Product> getAllProducts();
     List<Product> getProductsByCategory(String category);
