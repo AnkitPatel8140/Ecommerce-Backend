@@ -26,4 +26,10 @@ created 3 models Category, Image and Product
                                                     Day - 5
 
 Today i am implementing the imageService class
- 1:40:36
+
+                                                    Day - 6
+
+today i created the contoller package and started creating the imageController for now only 2 apis are created the
+save and download
+
+1:57:33
