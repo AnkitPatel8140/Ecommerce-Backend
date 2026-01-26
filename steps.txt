@@ -32,4 +32,6 @@ Today i am implementing the imageService class
 today i created the contoller package and started creating the imageController for now only 2 apis are created the
 save and download
 
-1:57:33
+                                                    Day - 7
+
+Completed the imageController.
