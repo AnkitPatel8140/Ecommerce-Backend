@@ -35,3 +35,5 @@ save and download
                                                     Day - 7
 
 Completed the imageController.
+Completed the productController.
+ 2.44.52
