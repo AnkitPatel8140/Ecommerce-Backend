@@ -33,7 +33,7 @@ public class ProductController {
         try {
             Product products = productService.getProductById(productId);
             return ResponseEntity.ok(new ApiResponse("success", products));
-        } catch (ResourceNotFoundException e) {
+        } catch (Exception e) {
             return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
         }
     }
@@ -43,7 +43,7 @@ public class ProductController {
         try{
             Product theProduct = productService.addProduct(product);
             return ResponseEntity.ok(new ApiResponse("add Product Success", theProduct));
-        } catch (ResourceNotFoundException e) {
+        } catch (Exception e) {
             return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(), null));
         }
     }
@@ -63,7 +63,7 @@ public class ProductController {
         try {
             productService.deleteProductById(productId);
             return ResponseEntity.ok(new ApiResponse("Delete product success!", productId));
-        } catch (ResourceNotFoundException e) {
+        } catch (Exception e) {
             return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
         }
     }
@@ -108,7 +108,7 @@ public class ProductController {
     }
 
     @GetMapping("/product/by-brand")
-    public ResponseEntity<ApiResponse> findProductByBrand(@PathVariable String brand) {
+    public ResponseEntity<ApiResponse> findProductByBrand(@RequestParam String brand) {
         try {
             List<Product> products = productService.getProductsByBrand(brand);
             if(products.isEmpty()) {
@@ -130,6 +130,16 @@ public class ProductController {
             return ResponseEntity.ok(new ApiResponse("success", products));
         } catch (Exception e) {
             return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(), null));
+        }
+    }
+
+    @GetMapping("/product/count/by-brand/and-name")
+    public ResponseEntity<ApiResponse> countProductsByBrandAndName(@RequestParam String brand, @RequestParam String name) {
+        try {
+            var productCount = productService.countProductByBrandAndName(brand, name);
+            return ResponseEntity.ok(new ApiResponse("Product count!", productCount));
+        } catch (Exception e) {
+            return ResponseEntity.ok(new ApiResponse(e.getMessage(),null));
         }
     }
 }

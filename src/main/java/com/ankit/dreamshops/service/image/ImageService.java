@@ -81,5 +81,6 @@ public class ImageService implements IImageService {
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
+        return image;
     }
 }
