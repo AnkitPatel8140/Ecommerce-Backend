@@ -1,15 +1,18 @@
 package com.ankit.dreamshops.service.product;
 
-import com.ankit.dreamshops.exception.ProductNotFoundException;
+import com.ankit.dreamshops.DTO.ImageDto;
+import com.ankit.dreamshops.DTO.ProductDto;
 import com.ankit.dreamshops.exception.ResourceNotFoundException;
 import com.ankit.dreamshops.model.Category;
+import com.ankit.dreamshops.model.Image;
 import com.ankit.dreamshops.model.Product;
 import com.ankit.dreamshops.repository.CategoryRepository;
+import com.ankit.dreamshops.repository.ImageRepository;
 import com.ankit.dreamshops.repository.ProductRepository;
 import com.ankit.dreamshops.requests.AddProductRequest;
 import com.ankit.dreamshops.requests.ProductUpdateRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +25,8 @@ public class ProductService implements IProductService{
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final ImageRepository imageRepository;
+    private final ModelMapper modelMapper;
 
     @Override
     public Product addProduct(AddProductRequest request) {
@@ -117,4 +122,19 @@ public class ProductService implements IProductService{
         return productRepository.countByBrandAndName(brand, name);
     }
 
+    @Override
+    public List<ProductDto> getConvertedProducts(List<Product> products) {
+        return products.stream().map(this::convertToDto).toList();
+    }
+
+    @Override
+    public ProductDto convertToDto(Product product) {
+        ProductDto productDto = modelMapper.map(product, ProductDto.class);
+        List<Image> images = imageRepository.findByProductId(product.getId());
+        List<ImageDto> imageDtos = images.stream()
+                .map(image -> modelMapper.map(image, ImageDto.class))
+                .toList();
+        productDto.setImages(imageDtos);
+        return productDto;
+    }
 }

@@ -1,5 +1,6 @@
 package com.ankit.dreamshops.service.product;
 
+import com.ankit.dreamshops.DTO.ProductDto;
 import com.ankit.dreamshops.model.Product;
 import com.ankit.dreamshops.requests.AddProductRequest;
 import com.ankit.dreamshops.requests.ProductUpdateRequest;
@@ -21,5 +22,9 @@ public interface IProductService {
     List<Product> getProductsByBrandAndName(String brand, String name);
 
     Long countProductByBrandAndName(String brand, String name);
+
+    List<ProductDto> getConvertedProducts(List<Product> products);
+
+    ProductDto convertToDto(Product product);
 }
 

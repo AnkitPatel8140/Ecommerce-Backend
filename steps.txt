@@ -37,3 +37,8 @@ save and download
 Completed the imageController.
 Completed the productController.
  2.44.52
+                                                    Day-8
+started creating the product dto
+added the maven dependency
+created the config package
+created the config class dream-shops
