@@ -36,9 +36,17 @@ save and download
 
 Completed the imageController.
 Completed the productController.
- 2.44.52
                                                     Day-8
 started creating the product dto
 added the maven dependency
 created the config package
 created the config class dream-shops
+
+                                                   Day - 9
+
+creating the cart and cartitem model
+created the cartService and cartItemService interface and also the classes which
+implements them.
+
+started creating the cartService class
+3:59:00
