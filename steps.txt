@@ -49,4 +49,14 @@ created the cartService and cartItemService interface and also the classes which
 implements them.
 
 started creating the cartService class
-3:59:00
+created the cartItemService interface started implementing it in cartItemservice class
+implementing the controllers CartController and CartItemController
+
+Since the cartId will be generated with each user individually but right now
+we have not implemented the user so we will create carts manually
+
+there was an issue with the cart total price update so i fixed it
+completed the total cart services
+
+5:11:22
+
