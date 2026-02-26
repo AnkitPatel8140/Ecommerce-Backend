@@ -58,5 +58,13 @@ we have not implemented the user so we will create carts manually
 there was an issue with the cart total price update so i fixed it
 completed the total cart services
 
-5:11:22
+created the order and orderItem model
+created the enum package and the orderStatus enum class for the order model
+created the order service package
+in the order service started creating the orderservice class and interface
+created the orderRepository for the orderService
+to complete the orderItem service we need userId so i created the user
+in model created a user class and made the necessary connections with the
+order and cart model
 
+5:45:40 last thing created is the place order
