@@ -1,5 +1,6 @@
 package com.ankit.dreamshops.controller;
 
+import com.ankit.dreamshops.DTO.OrderDto;
 import com.ankit.dreamshops.model.Order;
 import com.ankit.dreamshops.response.ApiResponse;
 import com.ankit.dreamshops.service.order.IOrderService;
@@ -40,7 +41,7 @@ public class OrderController {
     @GetMapping("/{userId}/orders")
     public ResponseEntity<ApiResponse> getUserOrders(@PathVariable Long userId) {
         try {
-            List<Order> order = orderService.getUserOrders(userId);
+            List<OrderDto> order = orderService.getUserOrders(userId);
             return ResponseEntity.ok(new ApiResponse("Item Order Success", order));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("Opps!", e.getMessage()));
