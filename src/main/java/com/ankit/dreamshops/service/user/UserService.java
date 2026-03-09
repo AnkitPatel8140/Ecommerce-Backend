@@ -1,5 +1,6 @@
 package com.ankit.dreamshops.service.user;
 
+import com.ankit.dreamshops.DTO.UserDto;
 import com.ankit.dreamshops.exception.AlreadyExistsException;
 import com.ankit.dreamshops.exception.ResourceNotFoundException;
 import com.ankit.dreamshops.model.User;
@@ -7,6 +8,7 @@ import com.ankit.dreamshops.repository.UserRepository;
 import com.ankit.dreamshops.requests.CreateUserRequest;
 import com.ankit.dreamshops.requests.UserUpdateRequest;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -15,6 +17,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService implements IUserService{
     private final UserRepository userRepository;
+    private final ModelMapper modelMapper;
+
     @Override
     public User getUserById(Long userId) {
         return userRepository.findById(userId)
@@ -52,5 +56,10 @@ public class UserService implements IUserService{
                 .ifPresentOrElse(userRepository :: delete, ()-> {
                     throw new ResourceNotFoundException("User not found");
                 });
+    }
+
+    @Override
+    public UserDto convertUserToDto(User user) {
+        return modelMapper.map(user, UserDto.class);
     }
 }

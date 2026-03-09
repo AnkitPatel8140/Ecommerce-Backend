@@ -75,4 +75,6 @@ creating the orderController
 created the orderDto orderItemDto
 
 creating the usercontoller
-6:35:20
+
+created the userDto, CartDto, CartItemDto
+6:57:45 will be checking the apis using postman
