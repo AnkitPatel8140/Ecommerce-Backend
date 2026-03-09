@@ -17,7 +17,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -42,13 +41,7 @@ public class OrderService implements IOrderService{
         return savedOrder;
     }
 
-    @Override
-    public Order getOrder(Long orderId) {
-        return orderRepository.findById(orderId)
-                .orElseThrow(
-                        ()-> new ResourceNotFoundException("Order not found")
-                );
-    }
+
 
 
     private Order createOrder(Cart cart) {
@@ -81,5 +74,18 @@ public class OrderService implements IOrderService{
                 .map(item -> item.getPrice()
                         .multiply(new BigDecimal(item.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    @Override
+    public Order getOrder(Long orderId) {
+        return orderRepository.findById(orderId)
+                .orElseThrow(
+                        ()-> new ResourceNotFoundException("No Order found")
+                );
+    }
+
+    @Override
+    public List<Order> getUserOrders(Long userId) {
+        return orderRepository.findByUserId(userId);
     }
 }

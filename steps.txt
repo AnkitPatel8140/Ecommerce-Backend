@@ -66,5 +66,10 @@ created the orderRepository for the orderService
 to complete the orderItem service we need userId so i created the user
 in model created a user class and made the necessary connections with the
 order and cart model
+Created the orderService cartService
 
-5:45:40 last thing created is the place order
+created the user model and also created the user service
+
+creating the orderController
+
+created the orderDto
