@@ -2,6 +2,7 @@ package com.ankit.dreamshops.service.product;
 
 import com.ankit.dreamshops.DTO.ImageDto;
 import com.ankit.dreamshops.DTO.ProductDto;
+import com.ankit.dreamshops.exception.AlreadyExistsException;
 import com.ankit.dreamshops.exception.ResourceNotFoundException;
 import com.ankit.dreamshops.model.Category;
 import com.ankit.dreamshops.model.Image;
@@ -32,6 +33,9 @@ public class ProductService implements IProductService{
     public Product addProduct(AddProductRequest request) {
 //        check if the category is present if present the add the new product
 //        else create a new category and then add the new product
+        if(productExists(request.getName(), request.getBrand())) {
+            throw new AlreadyExistsException(request.getBrand() + " " + request.getName() + "already exists");
+        }
         Category category = Optional.ofNullable(categoryRepository.findByName(request.getCategory().getName()))
                 .orElseGet(()->{
                     Category newCategory = new Category(request.getCategory().getName());
@@ -40,6 +44,11 @@ public class ProductService implements IProductService{
         request.setCategory(category);
         return productRepository.save(createProduct(request,category));
     }
+
+    private boolean productExists(String name, String brand) {
+        return productRepository.existsByNameAndBrand(name, brand);
+    }
+
 
     private Product createProduct(AddProductRequest product, Category category) {
         return new Product(

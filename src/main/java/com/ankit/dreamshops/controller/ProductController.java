@@ -1,6 +1,7 @@
 package com.ankit.dreamshops.controller;
 
 import com.ankit.dreamshops.DTO.ProductDto;
+import com.ankit.dreamshops.exception.AlreadyExistsException;
 import com.ankit.dreamshops.exception.ResourceNotFoundException;
 import com.ankit.dreamshops.model.Product;
 import com.ankit.dreamshops.requests.AddProductRequest;
@@ -14,8 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.awt.image.ImageProducer;
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -47,8 +47,8 @@ public class ProductController {
             Product theProduct = productService.addProduct(product);
             ProductDto productDto = productService.convertToDto(theProduct);
             return ResponseEntity.ok(new ApiResponse("add Product Success", productDto));
-        } catch (Exception e) {
-            return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(), null));
+        } catch (AlreadyExistsException e) {
+            return ResponseEntity.status(CONFLICT).body(new ApiResponse(e.getMessage(), null));
         }
     }
 
