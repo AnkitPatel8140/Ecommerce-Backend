@@ -1,6 +1,7 @@
 package com.ankit.dreamshops.service.cart;
 
 import com.ankit.dreamshops.model.Cart;
+import com.ankit.dreamshops.model.User;
 
 import java.math.BigDecimal;
 
@@ -9,7 +10,7 @@ public interface ICartService {
     void clearCart(Long id);
     BigDecimal getTotalPrice(Long id);
 
-    Long initializeNewCart();
+    Cart initializeNewCart(User user);
 
     Cart getCartByUserId(Long userId);
 }
