@@ -78,4 +78,14 @@ creating the usercontoller
 
 created the userDto, CartDto, CartItemDto
 done some necessary changes.
-7:53:20
+
+implementing the spring security
+add the spring security dependency in the pom.xml
+created a security folder
+        in this folder created two more packages user and config
+
+in user created two classes ShopUserDetails and ShopUserDetailsService
+
+created role in model package
+
+8:15:25
