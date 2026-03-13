@@ -98,3 +98,9 @@ jjwt-impl
 jjwt-jackson
 
 created a class called jwtutils in the jwt pacakge
+
+in application.properties add the jwt expirationTime, and jwtSecret
+
+create the AuthTokenFilter method in the jwt folder
+created the JwtAuthEntryPoint class in the jwt folder
+8:48:30
