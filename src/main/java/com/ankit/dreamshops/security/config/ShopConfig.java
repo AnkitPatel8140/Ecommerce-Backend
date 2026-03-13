@@ -1,4 +1,4 @@
-package com.ankit.dreamshops.config;
+package com.ankit.dreamshops.security.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

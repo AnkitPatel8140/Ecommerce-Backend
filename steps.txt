@@ -88,4 +88,13 @@ in user created two classes ShopUserDetails and ShopUserDetailsService
 
 created role in model package
 
-8:15:25
+created the jwt package in security package
+
+moved the shop config class to config package in the security
+
+added these 3 dependency
+jjwt-api
+jjwt-impl
+jjwt-jackson
+
+created a class called jwtutils in the jwt pacakge
