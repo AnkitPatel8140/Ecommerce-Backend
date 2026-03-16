@@ -8,11 +8,13 @@ import com.ankit.dreamshops.service.cart.CartItemService;
 import com.ankit.dreamshops.service.cart.ICartItemService;
 import com.ankit.dreamshops.service.cart.ICartService;
 import com.ankit.dreamshops.service.user.IUserService;
+import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,6 +35,8 @@ public class CartItemController {
             return ResponseEntity.ok(new ApiResponse("Added successfylly!", null));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
+        } catch (JwtException e) {
+            return ResponseEntity.status(UNAUTHORIZED).body(new ApiResponse(e.getMessage(), null));
         }
 
     }
