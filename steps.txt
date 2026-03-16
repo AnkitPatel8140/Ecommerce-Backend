@@ -103,3 +103,5 @@ in application.properties add the jwt expirationTime, and jwtSecret
 
 create the AuthTokenFilter method in the jwt folder
 created the JwtAuthEntryPoint class in the jwt folder
+completed the security portion and now the login is pending
+9:25:00
