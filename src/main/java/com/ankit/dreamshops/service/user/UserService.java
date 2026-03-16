@@ -69,5 +69,6 @@ public class UserService implements IUserService{
     public User getAuthenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
+        return userRepository.findByEmail(email);
     }
 }
