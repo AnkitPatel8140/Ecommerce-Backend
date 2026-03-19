@@ -104,4 +104,11 @@ in application.properties add the jwt expirationTime, and jwtSecret
 create the AuthTokenFilter method in the jwt folder
 created the JwtAuthEntryPoint class in the jwt folder
 completed the security portion and now the login is pending
-9:25:00
+
+implementing the sing up and login
+
+in the controller created a new class called AuthController
+in request created a LoginRequest class
+in response created a JwtResponse class
+
+created a global exception handler class in the exception package

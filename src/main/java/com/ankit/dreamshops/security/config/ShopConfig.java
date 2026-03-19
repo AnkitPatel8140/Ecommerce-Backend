@@ -2,6 +2,7 @@ package com.ankit.dreamshops.security.config;
 
 import com.ankit.dreamshops.security.jwt.AuthTokenFilter;
 import com.ankit.dreamshops.security.jwt.JwtAuthEntryPoint;
+import com.ankit.dreamshops.security.jwt.JwtUtils;
 import com.ankit.dreamshops.security.user.ShopUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -29,6 +30,7 @@ import java.util.List;
 public class ShopConfig {
     private final ShopUserDetailsService userDetailsService;
     private final JwtAuthEntryPoint authEntryPoint;
+    private final JwtUtils jwtUtils;
 
     private static final List<String> SECURED_URLS = List.of(
             "/api/v1/carts/**",
@@ -48,7 +50,7 @@ public class ShopConfig {
 
     @Bean
     public AuthTokenFilter authTokenFilter() {
-        return new AuthTokenFilter();
+        return new AuthTokenFilter(jwtUtils, userDetailsService);
     }
 
     @Bean
