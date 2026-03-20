@@ -2,9 +2,11 @@ package com.ankit.dreamshops.controller;
 
 
 import com.ankit.dreamshops.requests.LoginRequest;
+import com.ankit.dreamshops.requests.SignupRequest;
 import com.ankit.dreamshops.response.ApiResponse;
 import com.ankit.dreamshops.response.JwtResponse;
 import com.ankit.dreamshops.security.jwt.JwtUtils;
+import com.ankit.dreamshops.security.signup.AuthService;
 import com.ankit.dreamshops.security.user.ShopUserDetails;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,12 @@ import org.springframework.web.client.HttpClientErrorException;
 public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
+    private final AuthService authService;
+
+    @PostMapping("/signup")
+    public ResponseEntity<String> signup(@RequestBody SignupRequest request) {
+        return ResponseEntity.ok(authService.registerUser(request));
+    }
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse> login(@Valid @RequestBody LoginRequest request) {
