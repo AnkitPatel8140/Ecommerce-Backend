@@ -112,3 +112,5 @@ in request created a LoginRequest class
 in response created a JwtResponse class
 
 created a global exception handler class in the exception package
+
+i have to create a signup page and make it myself
