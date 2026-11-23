@@ -35,7 +35,7 @@ public class ShopConfig {
     private static final List<String> SECURED_URLS = List.of(
             "/api/v1/carts/**",
             "/api/v1/cartItems/**"
-            );
+    );
 
 
     @Bean
@@ -75,6 +75,11 @@ public class ShopConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers(SECURED_URLS.toArray(String[]::new)).authenticated()
+                                .requestMatchers(
+                                        "/swagger-ui/**",
+                                        "/swagger-ui.html",
+                                        "/v3/api-docs/**"
+                                ).permitAll()
                                 .anyRequest().permitAll()
                 );
 
