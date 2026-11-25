@@ -34,3 +34,8 @@ build/
 
 ### classFile ###
 .class
+
+### Env & Frontend ###
+.env
+frontend/node_modules/
+frontend/dist/

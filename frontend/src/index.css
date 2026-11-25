@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+:root {
+  --bg-canvas: #F7F4EE;
+  --bg-card: #FDFBF7;
+  --bg-raised: #EFE9DF;
+  --forest: #0D2D23;
+  --forest-hover: #143D30;
+  --sage: #DCE7DF;
+  --sand: #EAE5D6;
+  --coral: #C94A35;
+  --ink-primary: #1F1B16;
+  --ink-secondary: #5E554A;
+  --ink-muted: #7B7266;
+  --hairline: rgba(31, 27, 22, 0.08);
+  --ease-unslop: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html,
+body {
+  background-color: var(--bg-canvas);
+  color: var(--ink-primary);
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.font-serif-editorial {
+  font-family: 'Newsreader', Georgia, serif;
+}
+
+.font-brand {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+.font-mono-code {
+  font-family: 'JetBrains Mono', monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
