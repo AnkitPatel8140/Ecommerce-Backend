@@ -14,11 +14,10 @@ import type {
 
 export const TOKEN_STORAGE_KEY = 'dream_shops_token'
 
-const rawBaseUrl = import.meta.env.VITE_API_URL
-const API_BASE_URL = rawBaseUrl ? rawBaseUrl.replace(/\/+$/, '') : ''
+const API_BASE_URL = import.meta.env.VITE_API_URL
 
 export const api = axios.create({
-  baseURL: API_BASE_URL ? `${API_BASE_URL}/api/v1` : '/api/v1',
+  baseURL: `${API_BASE_URL}/api/v1`,
   headers: {
     'Content-Type': 'application/json',
   },

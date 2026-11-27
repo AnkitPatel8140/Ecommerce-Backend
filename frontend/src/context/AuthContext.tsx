@@ -53,7 +53,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(fetched)
       return fetched
     } catch {
-      return null
+      // Fallback: create minimal user from token if user profile endpoint fails
+      const fallbackUser: UserDto = {
+        id: parsed.id,
+        firstName: parsed.sub.split('@')[0] || 'User',
+        lastName: '',
+        email: parsed.sub,
+        orders: [],
+        cart: null,
+      }
+      setUser((prev) => prev || fallbackUser)
+      return fallbackUser
     }
   }, [logout])
 
@@ -66,9 +76,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return
       }
       setLoading(true)
-      const fetched = await refreshUser()
+      await refreshUser()
       if (active) {
-        if (!fetched) logout()
         setLoading(false)
       }
     }

@@ -12,28 +12,22 @@ public class CorsConfig {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-
         CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowedOrigins(List.of(
+        // Allows your production Vercel URL, preview URLs, and local dev
+        config.setAllowedOriginPatterns(List.of(
+            "https://*.vercel.app",
             "https://ecommerce-backend-omega-eight.vercel.app",
-            "http://localhost:5173"
+            "http://localhost:*",
+            "http://127.0.0.1:*"
         ));
 
-        config.setAllowedMethods(List.of(
-            "GET", "POST", "PUT", "DELETE",
-            "PATCH", "OPTIONS"
-        ));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setExposedHeaders(List.of("Authorization"));
+        config.setAllowCredentials(true);
 
-        config.setAllowedHeaders(List.of(
-            "Authorization", "Content-Type"
-        ));
-
-        config.setAllowCredentials(false);
-
-        UrlBasedCorsConfigurationSource source =
-            new UrlBasedCorsConfigurationSource();
-
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
 
         return source;
