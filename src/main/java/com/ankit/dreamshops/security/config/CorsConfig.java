@@ -16,7 +16,7 @@ public class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowedOrigins(List.of(
-            "https://ecommerce-backend-omega-eight.vercel.app/",
+            "https://ecommerce-backend-omega-eight.vercel.app",
             "http://localhost:5173"
         ));
 
