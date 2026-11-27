@@ -67,7 +67,8 @@ export function getErrorMessage(error: unknown): string {
  */
 export function getImageUrl(image?: ImageDto | null): string | null {
   if (!image?.id) return null
-  return `/api/v1/images/images/image/download/${image.id}`
+  const path = `/api/v1/images/images/image/download/${image.id}`
+  return API_BASE_URL ? `${API_BASE_URL}${path}` : path
 }
 
 export function formatPrice(value: number | string | undefined): string {
