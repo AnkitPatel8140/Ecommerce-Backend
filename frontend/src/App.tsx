@@ -11,6 +11,7 @@ import { ProductDetailPage } from './pages/ProductDetailPage'
 import { AuthPage } from './pages/AuthPage'
 import { OrdersPage } from './pages/OrdersPage'
 import { AdminPage } from './pages/AdminPage'
+import { ProfilePage } from './pages/ProfilePage'
 
 export default function App() {
   return (
@@ -28,6 +29,7 @@ export default function App() {
                     <Route path="/product/:id" element={<ProductDetailPage />} />
                     <Route path="/auth" element={<AuthPage />} />
                     <Route path="/orders" element={<OrdersPage />} />
+                    <Route path="/profile" element={<ProfilePage />} />
                     <Route path="/admin" element={<AdminPage />} />
                   </Routes>
                 </main>

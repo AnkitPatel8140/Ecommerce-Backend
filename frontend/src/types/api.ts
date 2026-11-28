@@ -60,13 +60,31 @@ export interface OrderDto {
   items: OrderItemDto[]
 }
 
+export interface AddressDto {
+  id?: number
+  street?: string
+  city?: string
+  state?: string
+  postalCode?: string
+  country?: string
+}
+
 export interface UserDto {
   id: number
   firstName: string
   lastName: string
   email: string
+  profileImage?: string | null
   orders: OrderDto[]
   cart: CartDto | null
+  address?: AddressDto | null
+}
+
+export interface UserUpdatePayload {
+  firstName?: string
+  lastName?: string
+  profileImage?: string | null
+  address?: AddressDto
 }
 
 export interface DecodedToken {

@@ -96,7 +96,7 @@ export const userApi = {
     const res = await api.get<ApiResponse<UserDto>>(`/users/${id}/user`)
     return res.data.data
   },
-  update: async (userId: number, payload: { firstName: string; lastName: string }) => {
+  update: async (userId: number, payload: import('../types/api').UserUpdatePayload) => {
     const res = await api.put<ApiResponse<UserDto>>(`/users/${userId}/update`, payload)
     return res.data.data
   },

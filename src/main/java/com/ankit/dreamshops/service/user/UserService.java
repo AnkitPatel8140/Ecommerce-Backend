@@ -48,8 +48,29 @@ public class UserService implements IUserService{
     @Override
     public User updateUser(UserUpdateRequest request, Long userId) {
         return userRepository.findById(userId).map(existingUser ->{
-            existingUser.setFirstName(request.getFirstName());
-            existingUser.setLastName(request.getLastName());
+            if (request.getFirstName() != null) {
+                existingUser.setFirstName(request.getFirstName());
+            }
+            if (request.getLastName() != null) {
+                existingUser.setLastName(request.getLastName());
+            }
+            if (request.getProfileImage() != null) {
+                existingUser.setProfileImage(request.getProfileImage());
+            }
+            if (request.getAddress() != null) {
+                var addressReq = request.getAddress();
+                var address = existingUser.getAddress();
+                if (address == null) {
+                    address = new com.ankit.dreamshops.model.Address();
+                    address.setUser(existingUser);
+                    existingUser.setAddress(address);
+                }
+                address.setStreet(addressReq.getStreet());
+                address.setCity(addressReq.getCity());
+                address.setState(addressReq.getState());
+                address.setPostalCode(addressReq.getPostalCode());
+                address.setCountry(addressReq.getCountry());
+            }
             return userRepository.save(existingUser);
         }).orElseThrow(()->new ResourceNotFoundException("User not found"));
     }

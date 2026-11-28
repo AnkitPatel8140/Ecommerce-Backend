@@ -25,6 +25,7 @@ export function Navbar() {
     { label: 'Home', to: '/' },
     { label: 'Shop', to: '/#catalog' },
     { label: 'Orders', to: '/orders' },
+    { label: 'Profile & Address', to: '/profile' },
   ]
 
   return (
@@ -69,15 +70,22 @@ export function Navbar() {
           {isAuthenticated ? (
             <div className="hidden sm:flex items-center gap-3">
               <Link
-                to="/orders"
+                to="/profile"
                 className="inline-flex items-center gap-2 h-9 px-3 rounded-lg text-sm font-medium text-[#5E554A] hover:text-[#1F1B16] hover:bg-[#EFE9DF]/70 transition-colors duration-150"
+                title="View & Edit Profile"
               >
-                {isAdmin ? (
+                {user?.profileImage ? (
+                  <img
+                    src={user.profileImage}
+                    alt={user.firstName || 'Profile'}
+                    className="w-5 h-5 rounded-full object-cover border border-[#0D2D23]/30"
+                  />
+                ) : isAdmin ? (
                   <ShieldCheck className="w-4 h-4 text-[#0D2D23]" strokeWidth={1.5} />
                 ) : (
                   <User className="w-4 h-4" strokeWidth={1.5} />
                 )}
-                <span className="max-w-[96px] truncate">{user?.firstName || 'Account'}</span>
+                <span className="max-w-[96px] truncate">{user?.firstName || 'Profile'}</span>
               </Link>
               <button
                 type="button"

@@ -26,8 +26,15 @@ public class User {
     private String email;
     private String password;
 
+    @Lob
+    @Column(columnDefinition = "LONGTEXT")
+    private String profileImage;
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Cart cart;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Address address;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> order;
